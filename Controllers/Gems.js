@@ -17,7 +17,7 @@ const cloudinary = require('cloudinary').v2
 const fs = require('fs')
 
 cloudinary.config({
-
+    "Iram la Chupa"
 })
 
 function getGems(req, res) {
