@@ -17,7 +17,7 @@ const cloudinary = require('cloudinary').v2
 const fs = require('fs')
 
 cloudinary.config({
-    "Iram la Chupa"
+
 })
 
 function getGems(req, res) {
@@ -125,7 +125,7 @@ function updateGemWithImages(_id, img) {
 
     GemsSub.findByIdAndUpdate(conceptID,
         { "$push": { "images": update } },
-        { "new": true, "upsert": true },
+        { "new": false, "upsert": false },
         (err, conceptUpdate) => {
             if (err) return res.status(500).send({ message: `Error in the request ${err}` })
             console.log("Gem update", conceptUpdate)
@@ -148,6 +148,7 @@ function deleteGem(req, res) {
 function uploadPhotos(req, res) {
 
     const path = req.files.file.path
+    const gemID = req.body._id
     console.log(typeof path)
     const uniqueFilename = Random.id()
     fs.readFile(path, function (err, data) {
@@ -156,9 +157,13 @@ function uploadPhotos(req, res) {
         tags: `gemsImages`},
         (err, result)=> {
                 console.log(result);
+            let routeImg = result.url
+            let arrayRoute = routeImg.split("/")
+            let finalUrl = arrayRoute[6] + "/" + arrayRoute[7] + "/" + arrayRoute[8]
+            
             if(err) return res.status(500).send(err)
             fs.unlinkSync(path)
-            updateGemWithImages()
+            updateGemWithImages(gemID, finalUrl)
             res.status(200).send({message: "upload image sucess",
             imageData: result})
         
