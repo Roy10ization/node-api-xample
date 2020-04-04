@@ -1,3 +1,7 @@
+//Conexión y configuración de la base de datos en mongoDB
+
+//Esta configuración es la que nos dice en dónde estará trabajando la base de datos para poder acceder a ella
+
 'use strict'
 const mongoose = require('mongoose')
 const app = require('./app')

@@ -1,6 +1,8 @@
+//Constantes utilizadas a lo largo del código
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+//Forma del registro de usuario en la base de datos
 const UserProfileSchema = Schema({
     name : {
         type: String

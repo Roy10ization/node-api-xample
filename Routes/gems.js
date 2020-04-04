@@ -1,5 +1,8 @@
+//Rutas de las funciones de gemas que permiten que un tercero (en este caso postman)  las utilice.
+
 const router = require('express').Router()
 
+//Constantes para las funciones de gemas.
 const GemsController = require('../Controllers/Gems')
 const VerifyToken = require('../middleware/VerifyToken')
 const multipart = require('connect-multiparty')

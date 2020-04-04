@@ -1,3 +1,6 @@
+
+/*Verificación de usuario con la utilización de un token jwt*/
+
 const jwt = require('jsonwebtoken');
 
 function verifyToken(req, res, next){

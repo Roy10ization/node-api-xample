@@ -1,7 +1,11 @@
+//Constantes utilizadas a lo largo del código
+
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const meteorID = require('meteor-mongo-id')
 const Random = require('meteor-random')
+
+//Reviews (arreglo de cuatro propiedades)
 
 const ReviewSchema = Schema({
     stars: {
@@ -19,6 +23,7 @@ const ReviewSchema = Schema({
     }
 })
 
+//Caracteristicas de las gemas
 const SpecsSchema = Schema ({
     faces: { type: Number },
     color: { type: String },
@@ -33,6 +38,7 @@ const SpecsSchema = Schema ({
     allowedValues : [1,2,3,4,5,6,7,8,9,10] }
 })
 
+//Forma en la que es insertada la gema a la base de datos
 const GemsSchema = Schema({
 
     _id:{

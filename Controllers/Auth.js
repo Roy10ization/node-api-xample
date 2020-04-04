@@ -1,3 +1,4 @@
+/*Funciones exportadas para que puedan ser utilizadas por un tercero (postman en este caso)*/
 module.exports = {
     loginUser,
     logoutUser,
@@ -5,14 +6,15 @@ module.exports = {
     signInUser
 }
 
+//Constantes usadas a lo largo del código
 const User = require('../Models/Users')
-
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const sha256 = require('sha256')
 
 const verifyToken = require('../Middleware/VerifyToken')
 
+//Inicio de sesión con usuario
 function loginUser(req, res){
       User.findOne({name: req.body.name}).then((user)=>{
           if(!user) return res.status(404).send('No user found')
@@ -21,7 +23,7 @@ function loginUser(req, res){
           
           if(!passwordIsvalid) return res.status(401).send({auth: false, message: 'Error password', token: null})
 
-          
+          /*Autenticación de usuario con un token*/ 
 
           let token = jwt.sign({id: user.id}, process.env.JWT_SECRET,{expiresIn: 864000})
           res.status(200).send({auth: true, token: token, username: user.name})
@@ -32,11 +34,13 @@ res.status(500).send({message: 'Error on server', error: err})
       })
 }
 
+//Cerrar sesion de usuario
 function logoutUser(req, res){
     res.status(200).send({auth: false, token: null});
 
 }
 
+//Mostrar usuario en uso al momento
 function getCurrentUser(req, res){
     let token = req.headers['x-access-token']
     if(!token) return res.status(401).send({auth: false, message: 'No token provided'})
@@ -49,6 +53,7 @@ function getCurrentUser(req, res){
     .catch((err)=> res.status(500).send({err}))
 }
 
+//Crea un usuario nuevo
 function signInUser(req, res){
     const user = new User({
         email: req.body.email,

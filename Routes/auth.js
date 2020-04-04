@@ -1,5 +1,8 @@
+//Rutas de autenticación de usuario para que un tercero (en este caso postman) pueda acceder a las funciones
+
 let router = require('express').Router()
 
+//Constantes para el apartado de autenticación
 const AuthController = require('../Controllers/Auth')
 const VerifyToken = require('../Middleware/VerifyToken')
 

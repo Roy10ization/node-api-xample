@@ -1,3 +1,5 @@
+/*Funciones exportadas para que puedan ser utilizadas por un tercero*/
+
 module.exports = {
     getGems,
     getGemsPagination,
@@ -9,6 +11,7 @@ module.exports = {
     updateGemWithImages,
 }
 
+//Constantes usadas a lo largo del código
 const GemsSub = require('../Models/Gems')
 const mongoose = require('mongoose')
 const meteorID = require('meteor-mongo-id')
@@ -17,9 +20,11 @@ const cloudinary = require('cloudinary').v2
 const fs = require('fs')
 
 cloudinary.config({
-
+//Configuración de la nube a la que subiremos las imagenes
+//(la configuración se obtiene en el sitio web entrando a la info de nuestra nube)
 })
 
+//Pide y trae la información de una gema previamente cargada
 function getGems(req, res) {
     GemsSub.find({}, (err, concepts) => {
         if (err) return res.status(500).send({ message: `Problem with the searching request ${err}` })
@@ -27,6 +32,7 @@ function getGems(req, res) {
         res.status(200).send({ gems: concepts })
     })
 }
+
 
 function getGemsPagination(req, res) {
     let perPage = parseInt(req.body.perPage)
@@ -56,6 +62,7 @@ function getGemsPagination(req, res) {
         })
 }
 
+//Pide y trae la información de una gema previamente cargada
 function getGem(req, res) {
     let conceptID = req.body._id
     GemsSub.find({ _id: conceptID }, (err, concept) => {
@@ -66,6 +73,7 @@ function getGem(req, res) {
 
 }
 
+//Crea un objeto de gema
 function createGem(req, res) {
     let gem = req.body
     let g = {
@@ -102,6 +110,7 @@ function createGem(req, res) {
     })
 }
 
+//Nos permite editar valores de un objeto agregado anteriormente
 function updateGem(req, res) {
     let conceptID = req.body._id
     let update = req.body.gem
@@ -119,6 +128,7 @@ function updateGem(req, res) {
 
 }
 
+//Nos permite actualizar la imagen de un objeto de gema creado anteriormente
 function updateGemWithImages(_id, img) {
     let conceptID = _id
     let update = img
@@ -134,6 +144,7 @@ function updateGemWithImages(_id, img) {
 
 }
 
+//Elimina el objeto de gema que le especifiquemos
 function deleteGem(req, res) {
     const conceptID = req.body._id
 
@@ -145,6 +156,7 @@ function deleteGem(req, res) {
 
 }
 
+//Carga una imagen y la asocia con un objeto de una gema 
 function uploadPhotos(req, res) {
 
     const path = req.files.file.path
@@ -174,6 +186,7 @@ function uploadPhotos(req, res) {
 
 }
 
+//Da el formato de fecha para nuestro apartado de reviews
 function formatDateName(now) {
     let year = now.getFullYear()
     let month = now.getMonth() < 9 ? `0${now.getMonth() + 1}` : now.getMonth() + 1
